@@ -52,7 +52,8 @@ You can adjust the button style parameters:
 
 ```python
 audio_bytes = audio_recorder(
-    text="",
+    neutral_text="Click to record",
+    recording_text="Recording ...",
     recording_color="#e8b62c",
     neutral_color="#6aa36f",
     icon_name="user",
