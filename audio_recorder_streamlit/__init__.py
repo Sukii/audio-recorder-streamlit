@@ -20,7 +20,8 @@ else:
 
 
 def audio_recorder(
-    text: str = "Click to record",
+    neutral_text: str = "Click to record",
+    recording_text: str = "Recording ...",
     energy_threshold: float = 0.01,
     pause_threshold: float = 0.8,
     neutral_color: str = "#303030",
@@ -34,8 +35,10 @@ def audio_recorder(
 
     Parameters
     ----------
-    text: str
+    neutral_text: str
         The text to display next to the recording button.
+    recording_text: str
+        The text to display during recording.
     energy_threshold: Union[float, Tuple[float, float]]
         The energy recording sensibility above which we consider that the user
         is speaking. If it is a float, then this is the energy threshold used
@@ -76,7 +79,8 @@ def audio_recorder(
         end_threshold = energy_threshold
 
     data = _audio_recorder(
-        text=text,
+        neutral_text=neutral_text,
+        recording_text=recording_text,
         start_threshold=start_threshold,
         end_threshold=end_threshold,
         pause_threshold=pause_threshold,
@@ -102,7 +106,8 @@ if not _RELEASE:
 
     st.subheader("Custom recorder")
     custom_audio_bytes = audio_recorder(
-        text="",
+        neutral_text="",
+        recording_text="",
         recording_color="#e8b62c",
         neutral_color="#6aa36f",
         icon_name="user",

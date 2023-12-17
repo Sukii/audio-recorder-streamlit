@@ -11,7 +11,8 @@ import {
 library.add(fas)
 
 interface AudioRecorderState {
-  color: string
+  color: string,
+  text: string
 }
 
 interface AudioData {
@@ -30,7 +31,10 @@ interface AudioRecorderProps {
 class AudioRecorder extends StreamlitComponentBase<AudioRecorderState> {
   public constructor(props: AudioRecorderProps) {
     super(props)
-    this.state = { color: this.props.args["neutral_color"] }
+    this.state = {
+    	       color: this.props.args["neutral_color"],
+    	       text: this.props.args["neutral_text"]
+    }
   }
 
   stream: MediaStream | null = null;
@@ -207,7 +211,8 @@ class AudioRecorder extends StreamlitComponentBase<AudioRecorderState> {
   start = async () => {
     this.recording = true;
     this.setState({
-      color: this.props.args["recording_color"]
+      color: this.props.args["recording_color"],
+      text: this.props.args["recording_text"]
     })
     await this.setupMic();
     // reset the buffers for the new recording
@@ -218,7 +223,8 @@ class AudioRecorder extends StreamlitComponentBase<AudioRecorderState> {
   stop = async () => {
     this.recording = false;
     this.setState({
-      color: this.props.args["neutral_color"]
+      color: this.props.args["neutral_color"],
+      text: this.props.args["neutral_text"]
     })
     this.closeMic();
     console.log(this.recordingLength);
@@ -281,7 +287,7 @@ class AudioRecorder extends StreamlitComponentBase<AudioRecorderState> {
 
   public render = (): ReactNode => {
     const { theme } = this.props
-    const text = this.props.args["text"]
+    const text = this.props.args["neutral_text"]
 
     if (theme) {
       // Maintain compatibility with older versions of Streamlit that don't send
@@ -290,7 +296,7 @@ class AudioRecorder extends StreamlitComponentBase<AudioRecorderState> {
 
     return (
       <span>
-        {text} &nbsp;
+        {this.state.text} &nbsp;
         <FontAwesomeIcon
         // @ts-ignore
         icon={this.props.args["icon_name"]}
